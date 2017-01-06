@@ -16,8 +16,14 @@ namespace _2CNF
             var result = graph.StronglyConnectedComponent(startVertex);
             PrintSss(result, size);
             var twoCnf = new TwoCnfTest(result, size);
-            Console.WriteLine(twoCnf.ContainsSolution());
-            Console.Read();
+            var solutionExists = twoCnf.ContainsSolution();
+            var solution = twoCnf.FindSolution();
+            int counter = 0;
+            foreach (var b in solution)
+            {
+                Console.WriteLine(counter < size ? $"~x{counter}: {b}" : $"x{counter-size}: {b}");
+                counter++;
+            }
         }
 
         public static void PrintSss(List<IEnumerable<int>> sss, int size)

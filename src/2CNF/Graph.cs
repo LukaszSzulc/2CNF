@@ -94,11 +94,11 @@ namespace _2CNF
                     visited[vertex] = true;
                 }
 
-                path.AddLast(vertex);
+                path.AddFirst(vertex);
 
             }
 
-            return path;
+            return path.Distinct();
         }
 
         private void GetAncestors(int startVertex, Stack<int> stack)
@@ -131,8 +131,5 @@ namespace _2CNF
 
             graph = (int[][])transposedGraph.Clone();
         }
-
-        
-
     }
 }

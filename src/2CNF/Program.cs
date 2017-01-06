@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace _2CNF
@@ -8,12 +8,33 @@ namespace _2CNF
     {
         public static void Main(string[] args)
         {
-            //var graph = CreateGraph();
-            var implication = new ImplicationGraph(6);
-            implication.Parse();
+            int size = 7;
+            int startVertex = 0;
+            var implication = new ImplicationGraph(size);
+            var implicationGraph = implication.Parse();
+            var graph = new Graph(implicationGraph);
+            var result = graph.StronglyConnectedComponent(startVertex);
+            PrintSss(result, size);
+            var twoCnf = new TwoCnfTest(result, size);
+            Console.WriteLine(twoCnf.ContainsSolution());
             Console.Read();
         }
 
+        public static void PrintSss(List<IEnumerable<int>> sss, int size)
+        {
+            int sccCounter = 0;
+            foreach (var scc in sss)
+            {
+                Console.Write($"Scc {++sccCounter}: ");
+                foreach (var i in scc)
+                {
+                    Console.Write(i > size ? $"x{i - size} " : $"~x{i} ");
+                }
+
+                Console.WriteLine();
+            }
+
+        }
         private static Graph CreateGraph()
         {
             var graph = new Graph(13);
@@ -58,5 +79,15 @@ namespace _2CNF
             return graph;
         }
 
+        private static Graph Test()
+        {
+            var g = new Graph(5);
+            g.AddEdge(1, 0);
+            g.AddEdge(0, 2);
+            g.AddEdge(2, 1);
+            g.AddEdge(0, 3);
+            g.AddEdge(3, 4);
+            return g;
+        }
     }
 }

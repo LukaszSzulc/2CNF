@@ -12,17 +12,22 @@ namespace _2CNF
         public Graph(int size)
         {
             graph = new int[size][];
-            visited = new bool[size];
+            InitializeArrays(size);
             for (int i = 0; i < graph.Length; i++)
             {
                 graph[i] = new int[size];
             }
+        }
 
+        private void InitializeArrays(int size)
+        {
+            visited = new bool[size];
         }
 
         public Graph(int[][] adjacencyMatrix)
         {
             graph = (int[][]) adjacencyMatrix.Clone();
+            InitializeArrays(adjacencyMatrix.Length);
         }
 
         public int[][] AdjacencyMatrix => graph;
@@ -124,8 +129,7 @@ namespace _2CNF
                 }
             }
 
-            graph = transposedGraph;
-            Print();
+            graph = (int[][])transposedGraph.Clone();
         }
 
         
